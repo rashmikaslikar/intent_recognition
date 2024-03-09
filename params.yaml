@@ -1,0 +1,17 @@
+data:
+  raw: data/raw/queries.csv
+  preprocessed: data/preprocessed
+  utilities: src/utils
+model: model/xgb
+process:
+  target: intent
+  test_size: 0.05
+train:
+  hyperparameters:
+    booster: 
+    - gbtree
+    - dart
+  grid_search:
+    cv: 2
+    scoring: accuracy
+    verbose: 3

@@ -1,0 +1,40 @@
+stages:
+  process:
+    cmd: python src/preprocess.py
+    deps:
+    - data/raw
+    - src/preprocess.py
+    params:
+    - process
+    - data
+    outs:
+    - data/preprocessed
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/preprocessed
+    - src/train.py
+    params:
+    - data
+    - model
+    - train
+    outs:
+    - model/xgb
+    - model/xgb.mlem:
+        cache: false
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - model/xgb
+    - data/preprocessed
+    - src/evaluate.py
+    params:
+    - data
+    - model
+    metrics:
+    - dvclive/metrics.json
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step

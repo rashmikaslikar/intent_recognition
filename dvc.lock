@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  process:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 7f524e7e7ce3123aa764a5433ea6aaf9.dir
+      size: 34268
+      nfiles: 1
+    - path: src/preprocess.py
+      hash: md5
+      md5: 87c7a83dbe8e8f3287f7c1540fa8dcfd
+      size: 5277
+    params:
+      params.yaml:
+        data:
+          raw: data/raw/queries.csv
+          preprocessed: data/preprocessed
+          utilities: src/utils
+        process:
+          target: intent
+          test_size: 0.05
+    outs:
+    - path: data/preprocessed
+      hash: md5
+      md5: 562b8242079b1bc4eadbbdd00c93915e.dir
+      size: 3394352
+      nfiles: 4
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/preprocessed
+      hash: md5
+      md5: 562b8242079b1bc4eadbbdd00c93915e.dir
+      size: 3394352
+      nfiles: 4
+    - path: src/train.py
+      hash: md5
+      md5: b0c8676fbf64ec717bf30876550196c9
+      size: 1413
+    params:
+      params.yaml:
+        data:
+          raw: data/raw/queries.csv
+          preprocessed: data/preprocessed
+          utilities: src/utils
+        model: model/xgb
+        train:
+          hyperparameters:
+            booster:
+            - gbtree
+            - dart
+          grid_search:
+            cv: 2
+            scoring: accuracy
+            verbose: 3
+    outs:
+    - path: model/xgb
+      hash: md5
+      md5: 552d3841265f2d581cb9bf5e80447a9e
+      size: 751305
+    - path: model/xgb.mlem
+      hash: md5
+      md5: 2aaeaead7543e278d8a7ff062a182875
+      size: 2129
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/preprocessed
+      hash: md5
+      md5: 562b8242079b1bc4eadbbdd00c93915e.dir
+      size: 3394352
+      nfiles: 4
+    - path: model/xgb
+      hash: md5
+      md5: 552d3841265f2d581cb9bf5e80447a9e
+      size: 751305
+    - path: src/evaluate.py
+      hash: md5
+      md5: 75bbb38e296f40e868034c913bc22efc
+      size: 1328
+    params:
+      params.yaml:
+        data:
+          raw: data/raw/queries.csv
+          preprocessed: data/preprocessed
+          utilities: src/utils
+        model: model/xgb
+    outs:
+    - path: dvclive/metrics.json
+      hash: md5
+      md5: b048f6652846dd38924ed14d391d0d44
+      size: 58
