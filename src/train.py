@@ -30,6 +30,7 @@ def train() -> None:
     """Train model and save it"""
     params = dvc.api.params_show()
     with Live(save_dvc_exp=True) as live:
+        print('Loading data...')
         X_train = load_data(f"{params['data']['preprocessed']}/train.npy")
         y_train = load_data(f"{params['data']['preprocessed']}/train_labels.npy")
         #pipeline = create_pipeline()
