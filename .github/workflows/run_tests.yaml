@@ -9,7 +9,7 @@ on:
 jobs:
   test_model:
     name: Test processed code and model
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout 
         id: checkout
