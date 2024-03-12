@@ -1,5 +1,5 @@
 deepchecks
-dvc==3.23.0
+dvc==3.38.0
 mlem
 numpy
 pandas
