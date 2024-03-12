@@ -24,14 +24,15 @@ jobs:
         run: pip install -r requirements.txt
         # $CONDA is an environment variable pointing to the root of the miniconda directory
         #$CONDA/bin/conda env update --file environment.yml --name base
+
+      - name: dvc version
+        run:  dvc doctor
         
       - name: Pull data and model
         #env:
           #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: 
-          - dvc doctor
-          - dvc pull -r myremote -v
+        run: dvc pull -r myremote -v
 
       - name: Run tests
         run: pytest 
