@@ -47,7 +47,7 @@ class Data_Preprocess(object):
 
     def get_labels(self,df):
         y=df['intent_id'] #labels
-        df.drop('intent_id',axis=1,inplace=True)
+        df.drop(['intent_id','intent'],axis=1,inplace=True)
         return df,y
 
     def split_data(self,X,y,test_size):
