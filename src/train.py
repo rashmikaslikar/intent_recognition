@@ -34,10 +34,12 @@ def train() -> None:
         X_train = load_data(f"{params['data']['preprocessed']}/train.npy")
         y_train = load_data(f"{params['data']['preprocessed']}/train_labels.npy")
         #pipeline = create_pipeline()
+        print('Training started..')
         model=train_model(
             X_train,
             y_train
         )
+        print('..Training ended')
         #live.log_params({"Best hyperparameters": grid_search.best_params_})
         #save_data(model, params["model"], 'model.pkl')
         save_model(model, params["model"], X_train)
