@@ -21,8 +21,10 @@ def test_get_X_y():
     preprocess=Data_Preprocess()
     df=preprocess.handle_nan(df,target=target)
     df=preprocess.feature_engineer(df)
+    print(df.shape,df.columns)
     id_to_intent=preprocess.id_to_intent(df)
     X,y=preprocess.get_labels(df)
+    print(X.columns)
 
     expected_X = pd.DataFrame(
                         {
@@ -35,7 +37,7 @@ def test_get_X_y():
 
                         })
     
-    expected_y = pd.Series(['Shopping','OTHER','OTHER'])
+    expected_y = pd.Series([0,1,1])
     
     assert_frame_equal(X, expected_X)
     assert_series_equal(y, expected_y, check_names=False)
