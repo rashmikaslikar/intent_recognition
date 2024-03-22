@@ -35,7 +35,7 @@ jobs:
         run: dvc pull -r myremote -v
 
       - name: Run tests
-        run: pytest 
+        run: pytest test_model.py
 
       - name: Evaluate model
         run: dvc exp run evaluate

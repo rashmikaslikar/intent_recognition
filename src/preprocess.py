@@ -8,7 +8,7 @@ from transformers import BertTokenizer, BertModel
 import pickle
 import dvc.api
 from pathlib import Path
-from helper import save_data
+from src.helper import save_data
 
 class Data_Preprocess(object):
     def __init__(self):
