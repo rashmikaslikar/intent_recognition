@@ -21,7 +21,6 @@ def test_get_X_y():
     preprocess=Data_Preprocess()
     df=preprocess.handle_nan(df,target=target)
     df=preprocess.feature_engineer(df)
-    print(df.shape,df.columns)
     id_to_intent=preprocess.id_to_intent(df)
     X,y=preprocess.get_labels(df)
     print(X.columns)
