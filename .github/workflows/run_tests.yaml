@@ -14,6 +14,12 @@ jobs:
       - name: Checkout 
         id: checkout
         uses: actions/checkout@v4
+        
+      - name: Git config email  
+        run: git config --global user.email "rashmikaslikar@outlook.de"
+
+      - name: Git config name  
+        run: git config --global user.name "Rashmi Kaslikar"
 
       - name: Environment setup
         uses: actions/setup-python@v4
