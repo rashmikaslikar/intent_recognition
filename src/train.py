@@ -42,6 +42,7 @@ def train() -> None:
         print('..Training ended')
         #live.log_params({"Best hyperparameters": grid_search.best_params_})
         #save_data(model, params["model"], 'model.pkl')
+        print("Save the model..")
         save_model(model, params["model"], X_train)
 
 
