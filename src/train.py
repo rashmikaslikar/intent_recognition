@@ -6,7 +6,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from xgboost import XGBClassifier
 from dvclive import Live
-from helper import load_data,save_data
+from src.helper import load_data,save_data
 from mlem.api import save
 
 def create_pipeline() -> Pipeline:
@@ -34,12 +34,15 @@ def train() -> None:
         X_train = load_data(f"{params['data']['preprocessed']}/train.npy")
         y_train = load_data(f"{params['data']['preprocessed']}/train_labels.npy")
         #pipeline = create_pipeline()
+        print('Training started..')
         model=train_model(
             X_train,
             y_train
         )
+        print('..Training ended')
         #live.log_params({"Best hyperparameters": grid_search.best_params_})
         #save_data(model, params["model"], 'model.pkl')
+        print("Save the model..")
         save_model(model, params["model"], X_train)
 
 
