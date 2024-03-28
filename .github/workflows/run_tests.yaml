@@ -43,8 +43,8 @@ jobs:
       - name: Run tests
         run: pytest
 
-      #- name: Evaluate model
-      #  run: dvc exp run evaluate
+      - name: Evaluate model
+        run: dvc repro evaluate
 
       - name: Iterative CML setup
         uses: iterative/setup-cml@v1
