@@ -10,6 +10,10 @@ jobs:
   test_model:
     name: Test processed code and model
     runs-on: windows-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     steps:
       - name: Checkout 
         id: checkout
