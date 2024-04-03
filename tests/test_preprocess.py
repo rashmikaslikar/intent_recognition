@@ -6,7 +6,7 @@ import numpy as np
 
 def test_get_X_y():
     """Test get_X_y function"""
-    df = pd.DataFrame({"date": ['2023-12-28', '2023-12-31','2023-12-29'], 
+    df = pd.DataFrame({"date": ['2023-12-26', '2023-12-31','2023-12-29'], 
                        "search_query": ['iphone 8', 'maps google', 'polystichum dahlem'],
                        "market":['de-de','de-de','en-gb'],
                        "geo_country": ['AT', 'DE', np.nan],
