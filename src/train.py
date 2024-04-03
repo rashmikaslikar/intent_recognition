@@ -6,7 +6,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from xgboost import XGBClassifier
 from dvclive import Live
-from src.helper import load_data,save_data
+from helper import load_data,save_data
 from mlem.api import save
 
 def create_pipeline() -> Pipeline:
