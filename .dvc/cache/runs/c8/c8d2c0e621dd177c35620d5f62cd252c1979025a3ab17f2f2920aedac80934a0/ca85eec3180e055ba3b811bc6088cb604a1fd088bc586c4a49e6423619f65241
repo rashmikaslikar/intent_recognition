@@ -1,0 +1,26 @@
+cmd: python src/preprocess.py
+deps:
+- path: data/raw
+  hash: md5
+  md5: 7f524e7e7ce3123aa764a5433ea6aaf9.dir
+  size: 34268
+  nfiles: 1
+- path: src/preprocess.py
+  hash: md5
+  md5: 2851015d2cf2a78a0cb41310a1b243c3
+  size: 5249
+params:
+  params.yaml:
+    data:
+      raw: data/raw/queries.csv
+      preprocessed: data/preprocessed
+      utilities: src/utils
+    process:
+      target: intent
+      test_size: 0.05
+outs:
+- path: data/preprocessed
+  hash: md5
+  md5: 0afd6b7d8422c4b2dad9df69ff821e8d.dir
+  size: 3394352
+  nfiles: 4

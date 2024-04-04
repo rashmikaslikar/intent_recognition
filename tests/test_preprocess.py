@@ -6,7 +6,7 @@ import numpy as np
 
 def test_get_X_y():
     """Test get_X_y function"""
-    df = pd.DataFrame({"date": ['2023-12-08', '2023-12-31','2023-12-29'], 
+    df = pd.DataFrame({"date": ['2023-12-26', '2023-12-31','2023-12-29'], 
                        "search_query": ['iphone 8', 'maps google', 'polystichum dahlem'],
                        "market":['de-de','de-de','en-gb'],
                        "geo_country": ['AT', 'DE', np.nan],
@@ -23,6 +23,7 @@ def test_get_X_y():
     df=preprocess.feature_engineer(df)
     id_to_intent=preprocess.id_to_intent(df)
     X,y=preprocess.get_labels(df)
+    print(X.columns)
 
     expected_X = pd.DataFrame(
                         {
@@ -35,7 +36,7 @@ def test_get_X_y():
 
                         })
     
-    expected_y = pd.Series(['Shopping','OTHER','OTHER'])
+    expected_y = pd.Series([0,1,1])
     
     assert_frame_equal(X, expected_X)
     assert_series_equal(y, expected_y, check_names=False)

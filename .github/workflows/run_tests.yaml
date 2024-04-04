@@ -10,30 +10,45 @@ jobs:
   test_model:
     name: Test processed code and model
     runs-on: windows-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     steps:
       - name: Checkout 
         id: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        
+      - name: Git config email  
+        run: git config --global user.email "rashmikaslikar@outlook.de"
+
+      - name: Git config name  
+        run: git config --global user.name "Rashmi Kaslikar"
 
       - name: Environment setup
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: "3.10.11"
       
       - name: Install dependencies
-        run: conda install --file requirements.txt
+        run: pip install -r requirements.txt
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        #$CONDA/bin/conda env update --file environment.yml --name base
+
+      #- name: dvc version
+      #  run:  dvc doctor
         
       - name: Pull data and model
         #env:
           #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: dvc pull -r myremote
+        run: dvc pull -r myremote -v
 
       - name: Run tests
-        run: pytest 
+        run: pytest
 
       - name: Evaluate model
-        run: dvc exp run evaluate
+        run: dvc repro evaluate
 
       - name: Iterative CML setup
         uses: iterative/setup-cml@v1
@@ -42,9 +57,9 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Add the metrics to the report
-          dvc metrics show --show-md >> report.md
-          # Add the parameters to the report
-          cat dvclive/params.yaml >> report.md
-          # Create a report in PR
+          #Add the metrics to the report
+          dvc metrics show --md >> report.md
+          #Add the parameters to the report
+          #cat dvclive/params.yaml >> report.md
+          #Create a report in PR
           cml comment create report.md 

@@ -1,0 +1,36 @@
+cmd: python src/train.py
+deps:
+- path: data/preprocessed
+  hash: md5
+  md5: 0afd6b7d8422c4b2dad9df69ff821e8d.dir
+  size: 3394352
+  nfiles: 4
+- path: src/train.py
+  hash: md5
+  md5: b0c8676fbf64ec717bf30876550196c9
+  size: 1413
+params:
+  params.yaml:
+    data:
+      raw: data/raw/queries.csv
+      preprocessed: data/preprocessed
+      utilities: src/utils
+    model: model/xgb
+    train:
+      hyperparameters:
+        booster:
+        - gbtree
+        - dart
+      grid_search:
+        cv: 2
+        scoring: accuracy
+        verbose: 3
+outs:
+- path: model/xgb
+  hash: md5
+  md5: 552d3841265f2d581cb9bf5e80447a9e
+  size: 751305
+- path: model/xgb.mlem
+  hash: md5
+  md5: 2aaeaead7543e278d8a7ff062a182875
+  size: 2129

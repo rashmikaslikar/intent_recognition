@@ -35,7 +35,7 @@ class Data_Preprocess(object):
         intent_id_df = df[['intent', 'intent_id']].drop_duplicates().sort_values('intent_id')
         #intent_to_id = dict(intent_id_df.values)
         id_to_intent = dict(intent_id_df[['intent_id', 'intent']].values)
-        save_data(id_to_intent,params['data']['utilities'],'id_to_intent.pkl')
+        return id_to_intent
 
     def feature_engineer(self,df):
         other=['US','AT','GH']
@@ -47,7 +47,7 @@ class Data_Preprocess(object):
 
     def get_labels(self,df):
         y=df['intent_id'] #labels
-        df.drop('intent_id',axis=1,inplace=True)
+        df.drop(['intent_id','intent'],axis=1,inplace=True)
         return df,y
 
     def split_data(self,X,y,test_size):
@@ -114,6 +114,7 @@ if __name__=="__main__":
     df=preprocess.handle_nan(df,target=params["process"]["target"])
     df=preprocess.feature_engineer(df)
     id_to_intent=preprocess.id_to_intent(df)
+    save_data(id_to_intent,params['data']['utilities'],'id_to_intent.pkl')
     X,y=preprocess.get_labels(df)
     df_train, df_test, y_train, y_test=preprocess.split_data(X,y,params["process"]["test_size"])
     cat_metrics=['market','geo_country','device_type','browser_name']
